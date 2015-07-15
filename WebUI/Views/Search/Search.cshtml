@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Entities.Student>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<div class="col-md-offset-3">
+    <h2>Search results:</h2>
+</div>
+
+@{
+    if(Model != null && Model.Count() > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Group Number</th>
+                <th>Record Book Number</th>
+            </tr>
+            @foreach(var s in Model)
+            {
+                <tr>
+                    <td>@s.Name</td>
+                    <td>@s.GroupNumber</td>
+                    <td>@s.RecordBookNumber</td>
+                </tr>
+            }
+        </table>
+    }
+    else 
+    {
+        <h3>No students found</h3>
+    }
+}
+
+
+
+

@@ -1,0 +1,9 @@
+D:\work\testproject\StudentProgress\DAL\bin\Debug\DAL.dll.config
+D:\work\testproject\StudentProgress\DAL\bin\Debug\DAL.dll
+D:\work\testproject\StudentProgress\DAL\bin\Debug\DAL.pdb
+D:\work\testproject\StudentProgress\DAL\bin\Debug\EntityFramework.dll
+D:\work\testproject\StudentProgress\DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\work\testproject\StudentProgress\DAL\bin\Debug\EntityFramework.xml
+D:\work\testproject\StudentProgress\DAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\work\testproject\StudentProgress\DAL\obj\Debug\DAL.dll
+D:\work\testproject\StudentProgress\DAL\obj\Debug\DAL.pdb

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebUI.Models.ProgressViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@if(Model.Count() > 0 && Model != null)
+{ 
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubjectID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mark)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Semester)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Students.FirstOrDefault(s => s.StudentID == item.StudentID).Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subjects.FirstOrDefault(s => s.SubjectID == item.SubjectID).Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mark)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Semester)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ProgressID }, new { @class = "btn btn-default"})
+            @Html.ActionLink("Delete", "Delete", new { id = item.ProgressID }, new { @class = "btn btn-default", @name = "editButton"})
+        </td>
+    </tr>
+}
+
+</table>
+}
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="modalDelete">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" name="submitDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("button[name='submitDelete']").on('click', function () {
+        });
+    });
+</script>

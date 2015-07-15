@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudentProgressModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Progress">
+    <Key>
+      <PropertyRef Name="ProgressID" />
+    </Key>
+    <Property Name="ProgressID" Type="Int32" Nullable="false" />
+    <Property Name="StudentID" Type="Int32" Nullable="false" />
+    <Property Name="SubjectID" Type="Int32" Nullable="false" />
+    <Property Name="Mark" Type="Int32" Nullable="false" />
+    <Property Name="Semester" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Student" Relationship="Self.FK_Progress_Student" FromRole="Progress" ToRole="Student" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK_Progress_Subject" FromRole="Progress" ToRole="Subject" />
+  </EntityType>
+  <EntityType Name="Speciality">
+    <Key>
+      <PropertyRef Name="SpecialityID" />
+    </Key>
+    <Property Name="SpecialityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Students" Relationship="StudentProgressModel.FK_Student_Speciality1" FromRole="Speciality" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="GroupNumber" Type="Int32" Nullable="false" />
+    <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="SpecialityID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Progresses" Relationship="Self.FK_Progress_Student" FromRole="Student" ToRole="Progress" />
+    <NavigationProperty Name="Speciality1" Relationship="StudentProgressModel.FK_Student_Speciality1" FromRole="Student" ToRole="Speciality" />
+    <Property Name="RecordBookNumber" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="SubjectID" />
+    </Key>
+    <Property Name="SubjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Progresses" Relationship="Self.FK_Progress_Subject" FromRole="Subject" ToRole="Progress" />
+  </EntityType>
+  <Association Name="FK_Progress_Student">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Progress">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Progress_Subject">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+    <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="SubjectID" />
+      </Principal>
+      <Dependent Role="Progress">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StudentProgressEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Progresses" EntityType="Self.Progress" />
+    <EntitySet Name="Specialities" EntityType="Self.Speciality" />
+    <EntitySet Name="Students" EntityType="Self.Student" />
+    <EntitySet Name="Subjects" EntityType="Self.Subject" />
+    <AssociationSet Name="FK_Progress_Student" Association="Self.FK_Progress_Student">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Progress" EntitySet="Progresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Progress_Subject" Association="Self.FK_Progress_Subject">
+      <End Role="Subject" EntitySet="Subjects" />
+      <End Role="Progress" EntitySet="Progresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Speciality1" Association="StudentProgressModel.FK_Student_Speciality1">
+      <End Role="Speciality" EntitySet="Specialities" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_Student_Speciality1">
+    <End Type="StudentProgressModel.Speciality" Role="Speciality" Multiplicity="1" />
+    <End Type="StudentProgressModel.Student" Role="Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Speciality">
+        <PropertyRef Name="SpecialityID" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="SpecialityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
